@@ -104,7 +104,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-gray-800 py-5 text-center text-sm text-gray-500">
-        © {new Date().getFullYear()} متجري. جميع الحقوق محفوظة.
+        © 2026 متجري. جميع الحقوق محفوظة.
       </div>
     </footer>
   );
