@@ -1,0 +1,18 @@
+import { NextResponse } from "next/server";
+import { backend } from "@/lib/backend";
+import { handleBackendError } from "@/lib/handleBackendError";
+
+export async function PATCH(request: Request) {
+  const body = await request.json();
+
+  try {
+    await backend.patch("/auth/reset-password", {
+      email: body.email,
+      otp: body.otp,
+      newPassword: body.newPassword,
+    });
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    return handleBackendError(error);
+  }
+}
