@@ -4,7 +4,10 @@ import { backend } from "@/lib/backend";
 import { getAuthHeader } from "@/lib/authHeader";
 import { handleBackendError } from "@/lib/handleBackendError";
 
-export async function proxyAuthed(config: AxiosRequestConfig) {
+export async function proxyAuthed<T = unknown>(
+  config: AxiosRequestConfig,
+  pick?: (payload: T) => unknown,
+) {
   const authorization = await getAuthHeader();
 
   if (!authorization) {
@@ -19,6 +22,10 @@ export async function proxyAuthed(config: AxiosRequestConfig) {
       ...config,
       headers: { ...config.headers, authorization },
     });
+
+    if (pick) {
+      return NextResponse.json({ ...data, data: pick(data.data as T) });
+    }
 
     return NextResponse.json(data);
   } catch (error) {
