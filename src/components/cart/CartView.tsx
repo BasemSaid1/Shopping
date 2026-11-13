@@ -2,7 +2,7 @@
 
 /* eslint-disable @next/next/no-img-element */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios, { type AxiosResponse } from "axios";
@@ -12,6 +12,7 @@ import {
   FaTrash,
   FaShoppingCart,
   FaImage,
+  FaExclamationTriangle,
 } from "react-icons/fa";
 import { api } from "@/lib/api";
 import { getErrorMessage } from "@/lib/getErrorMessage";
@@ -21,13 +22,47 @@ import type { ApiResponse, Cart, CartItem, Product } from "@/types";
 
 type AvailableItem = CartItem & { product: Product };
 
-export default function CartView({ initialCart }: { initialCart: Cart }) {
+export default function CartView() {
   const router = useRouter();
-  const [cart, setCart] = useState(initialCart);
+  const [cart, setCart] = useState<Cart | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
+  const [attempt, setAttempt] = useState(0);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [error, setError] = useState("");
 
-  const items = cart.items.filter(
+  useEffect(() => {
+    let cancelled = false;
+
+    api
+      .get<ApiResponse<Cart>>("/cart")
+      .then(({ data }) => {
+        if (!cancelled) setCart(data.data);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        if (axios.isAxiosError(err) && err.response?.status === 401) {
+          router.push("/login?redirect=/cart");
+          return;
+        }
+        setLoadError(getErrorMessage(err));
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [router, attempt]);
+
+  function retry() {
+    setLoadError("");
+    setLoading(true);
+    setAttempt((a) => a + 1);
+  }
+
+  const items = (cart?.items ?? []).filter(
     (item): item is AvailableItem => item.product !== null,
   );
   const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
@@ -63,6 +98,32 @@ export default function CartView({ initialCart }: { initialCart: Cart }) {
     mutate(productId, () =>
       api.delete<ApiResponse<Cart>>(`/cart/item/${productId}`),
     );
+
+  if (loading) {
+    return (
+      <div className="space-y-4">
+        {[0, 1, 2].map((i) => (
+          <div key={i} className="h-32 animate-pulse rounded-2xl bg-gray-100" />
+        ))}
+      </div>
+    );
+  }
+
+  if (loadError || !cart) {
+    return (
+      <div className="flex flex-col items-center gap-3 rounded-2xl bg-red-50 py-16 text-red-600">
+        <FaExclamationTriangle className="text-4xl" />
+        <p className="font-semibold">{loadError || "تعذر تحميل السلة"}</p>
+        <button
+          type="button"
+          onClick={retry}
+          className="text-sm font-semibold underline"
+        >
+          إعادة المحاولة
+        </button>
+      </div>
+    );
+  }
 
   if (items.length === 0) {
     return (
