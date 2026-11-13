@@ -36,6 +36,8 @@ export default function AddToCartButton({
     try {
       await api.post("/cart/add", { productId, quantity });
       setAdded(true);
+      setAdded(true);
+      router.refresh();
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.status === 401) {
         router.push(`/login?redirect=${encodeURIComponent(pathname)}`);

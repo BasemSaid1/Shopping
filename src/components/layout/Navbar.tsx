@@ -21,7 +21,13 @@ const links = [
   { href: "/brands", label: "الماركات" },
 ];
 
-export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
+export default function Navbar({
+  isLoggedIn,
+  cartCount,
+}: {
+  isLoggedIn: boolean;
+  cartCount: number;
+}) {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -129,9 +135,14 @@ export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
           <Link
             href="/cart"
             aria-label="السلة"
-            className="rounded-full p-2 text-gray-600 transition hover:bg-gray-100 hover:text-blue-600"
+            className="relative rounded-full p-2 text-gray-600 transition hover:bg-gray-100 hover:text-blue-600"
           >
             <FaShoppingCart className="text-xl" />
+            {cartCount > 0 && (
+              <span className="absolute -end-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-600 px-1 text-xs font-bold text-white">
+                {cartCount > 99 ? "99+" : cartCount}
+              </span>
+            )}
           </Link>
 
           <div className="hidden lg:block">{authAction("")}</div>

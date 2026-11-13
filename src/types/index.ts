@@ -44,3 +44,16 @@ export interface ProductsResult {
   products: Product[];
   pagination: Pagination;
 }
+
+export interface CartItem {
+  product: Product | null;
+  quantity: number;
+  pricePerUnit: number;
+  subTotal: number;
+}
+
+export interface Cart {
+  _id: string;
+  items: CartItem[];
+  totalPrice: number;
+}
