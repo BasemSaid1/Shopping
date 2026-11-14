@@ -7,6 +7,9 @@ export default function CheckoutSuccessPage() {
       <FaCheckCircle className="text-6xl text-green-500" />
       <h1 className="text-2xl font-bold text-gray-800">تم استلام طلبك</h1>
       <p className="text-gray-600">شكرًا لتسوقك معنا.</p>
+      <Link href="/orders" className="font-semibold text-blue-600">
+        عرض طلباتي
+      </Link>
       <Link
         href="/products"
         className="rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700"

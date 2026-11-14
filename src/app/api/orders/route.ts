@@ -25,3 +25,7 @@ export async function POST(request: Request) {
     }),
   );
 }
+
+export async function GET() {
+  return proxyAuthed({ method: "GET", url: "/order" });
+}

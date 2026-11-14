@@ -57,3 +57,34 @@ export interface Cart {
   items: CartItem[];
   totalPrice: number;
 }
+
+export type OrderStatus =
+  | "PENDING"
+  | "PAID"
+  | "CONFIRMED"
+  | "SHIPPED"
+  | "DELIVERED"
+  | "CANCELLED";
+
+export type PaymentMethod = "CARD" | "CASH";
+
+export interface OrderItem {
+  product: Pick<Product, "_id" | "title" | "image" | "price"> | null;
+  quantity: number;
+  priceSnapShot: number;
+}
+
+export interface Order {
+  _id: string;
+  items: OrderItem[];
+  subTotal: number;
+  discountAmount: number;
+  finalTotal: number;
+  status: OrderStatus;
+  paymentMethod: PaymentMethod;
+  shippingAddress: string;
+  phone: string;
+  appliedCoupon: { code: string; discountPercentage: number } | null;
+  createdAt: string;
+  refundedAt?: string;
+}

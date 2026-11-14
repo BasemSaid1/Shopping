@@ -1,15 +1,22 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
+import { GENERIC_ERROR, translateError } from "@/lib/translateError";
 
 export function handleBackendError(error: unknown) {
   if (axios.isAxiosError(error) && error.response) {
-    const message = error.response.data?.message;
+    const raw = error.response.data?.message;
+    const messages: string[] = Array.isArray(raw)
+      ? raw
+      : raw
+        ? [String(raw)]
+        : [];
+
+    const translated = [...new Set(messages.map(translateError))];
+
     return NextResponse.json(
       {
         success: false,
-        message: Array.isArray(message)
-          ? message.join("، ")
-          : (message ?? "حدث خطأ غير متوقع"),
+        message: translated.length ? translated.join("، ") : GENERIC_ERROR,
       },
       { status: error.response.status },
     );

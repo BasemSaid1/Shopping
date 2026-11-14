@@ -34,6 +34,10 @@ export default function Navbar({
   const [search, setSearch] = useState("");
   const [loggingOut, setLoggingOut] = useState(false);
 
+  const navLinks = isLoggedIn
+    ? [...links, { href: "/orders", label: "طلباتي" }]
+    : links;
+
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
@@ -121,7 +125,7 @@ export default function Navbar({
         {/* باقي العناصر (شمال) */}
         <div className="ms-auto flex items-center gap-4">
           <ul className="hidden items-center gap-1 lg:flex">
-            {links.map((link) => (
+            {navLinks.map((link) => (
               <li key={link.href}>
                 <Link href={link.href} className={linkClass(link.href)}>
                   {link.label}
@@ -163,7 +167,7 @@ export default function Navbar({
         <div className="space-y-4 border-t border-gray-200 bg-white px-4 py-4 lg:hidden">
           {searchBox}
           <ul className="space-y-1">
-            {links.map((link) => (
+            {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
