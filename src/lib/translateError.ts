@@ -66,8 +66,14 @@ const exact: Record<string, string> = {
   "rating must be a positive number": "التقييم يجب أن يكون من 1 إلى 5",
   "rating must be less than or equal to 5": "التقييم يجب أن يكون من 1 إلى 5",
 
+  "category name is required": "اسم الفئة مطلوب",
+  "category name must be between 2 and 20 characters long":
+    "اسم الفئة يجب أن يكون بين 2 و20 حرفًا",
+  "category name already exists": "اسم الفئة مستخدم بالفعل",
+  "category logo is required": "لوجو الفئة مطلوب",
+
   // الملفات
-  "unsupported file format": "صيغة الملف غير مدعومة (JPG أو PNG فقط)",
+  "unsupported file format": "صيغة الملف غير مدعومة (JPG أو PNG أو WebP)",
   "file too large": "حجم الصورة أكبر من 5 ميجا",
 };
 

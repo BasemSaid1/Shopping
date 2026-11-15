@@ -20,7 +20,9 @@ export function useList<T>(path: string, loginRedirect: string) {
     api
       .get<ApiResponse<T[]>>(path)
       .then(({ data }) => {
-        if (!cancelled) setItems(data.data ?? []);
+        if (cancelled) return;
+        setItems(data.data ?? []);
+        setError("");
       })
       .catch((err) => {
         if (cancelled) return;
@@ -45,5 +47,10 @@ export function useList<T>(path: string, loginRedirect: string) {
     setAttempt((a) => a + 1);
   }
 
-  return { items, loading, error, retry };
+  // تحديث صامت (من غير skeleton)
+  function refresh() {
+    setAttempt((a) => a + 1);
+  }
+
+  return { items, loading, error, retry, refresh };
 }
