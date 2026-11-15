@@ -114,3 +114,12 @@ export interface Profile {
   profilePic?: string;
   createdAt: string;
 }
+
+export interface Review {
+  _id: string;
+  rating: number;
+  comment: string;
+  authorName: string;
+  mine: boolean;
+  createdAt: string;
+}

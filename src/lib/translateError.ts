@@ -57,6 +57,14 @@ const exact: Record<string, string> = {
   "you have already reviewed this product": "لقد قمت بتقييم هذا المنتج من قبل",
   "the product you want to review does not exist":
     "المنتج المراد تقييمه غير موجود",
+  "review not found or you are not authorized to update this review":
+    "التقييم غير موجود أو لا تملك صلاحية تعديله",
+  "review not found or you are not authorized to delete this review":
+    "التقييم غير موجود أو لا تملك صلاحية حذفه",
+  "comment must be between 3 and 500 characters":
+    "التعليق يجب أن يكون بين 3 و500 حرف",
+  "rating must be a positive number": "التقييم يجب أن يكون من 1 إلى 5",
+  "rating must be less than or equal to 5": "التقييم يجب أن يكون من 1 إلى 5",
 
   // الملفات
   "unsupported file format": "صيغة الملف غير مدعومة (JPG أو PNG فقط)",

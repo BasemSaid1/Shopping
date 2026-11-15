@@ -8,6 +8,7 @@ import { formatPrice } from "@/lib/format";
 import type { Product } from "@/types";
 import ProductGallery from "./ProductGallery";
 import AddToCartButton from "./AddToCartButton";
+import ReviewsSection from "@/components/reviews/ReviewsSection";
 
 const MONGO_ID = /^[a-f\d]{24}$/i;
 
@@ -134,6 +135,7 @@ export default async function ProductDetailsContent({
           </div>
         </div>
       </div>
+      <ReviewsSection productId={product._id} />
     </>
   );
 }
