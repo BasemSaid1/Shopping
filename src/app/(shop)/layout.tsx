@@ -9,7 +9,7 @@ export default function ShopLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col">
-      <Suspense fallback={<div className="h-16" />}>
+      <Suspense fallback={<div data-skeleton className="h-16" />}>
         <AuthNavbar />
       </Suspense>
 
