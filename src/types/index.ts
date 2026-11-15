@@ -88,3 +88,16 @@ export interface Order {
   createdAt: string;
   refundedAt?: string;
 }
+
+export interface Category {
+  _id: string;
+  name: string;
+  logo?: string;
+}
+
+export interface Brand {
+  _id: string;
+  name: string;
+  logo?: string;
+  categories: NamedRef[];
+}
