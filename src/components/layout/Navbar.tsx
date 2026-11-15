@@ -23,9 +23,11 @@ const links = [
 
 export default function Navbar({
   isLoggedIn,
+  isAdmin = false,
   cartCount,
 }: {
   isLoggedIn: boolean;
+  isAdmin?: boolean;
   cartCount: number;
 }) {
   const pathname = usePathname();
@@ -39,6 +41,7 @@ export default function Navbar({
         ...links,
         { href: "/orders", label: "طلباتي" },
         { href: "/profile", label: "حسابي" },
+        ...(isAdmin ? [{ href: "/admin", label: "لوحة التحكم" }] : []),
       ]
     : links;
 

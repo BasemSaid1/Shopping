@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 export default async function AuthNavbar() {
   const cookieStore = await cookies();
   const isLoggedIn = cookieStore.has("token");
+  const isAdmin = cookieStore.get("role")?.value === "ADMIN";
 
   let cartCount = 0;
 
@@ -18,5 +19,7 @@ export default async function AuthNavbar() {
     }
   }
 
-  return <Navbar isLoggedIn={isLoggedIn} cartCount={cartCount} />;
+  return (
+    <Navbar isLoggedIn={isLoggedIn} isAdmin={isAdmin} cartCount={cartCount} />
+  );
 }
