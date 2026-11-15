@@ -101,3 +101,16 @@ export interface Brand {
   logo?: string;
   categories: NamedRef[];
 }
+
+export interface Profile {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  role: Role;
+  gender: string;
+  provider: string;
+  profilePic?: string;
+  createdAt: string;
+}

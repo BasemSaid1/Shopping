@@ -7,8 +7,7 @@ const exact: Record<string, string> = {
     "لا يوجد حساب بهذا البريد الإلكتروني",
   "an account with this email address already exists":
     "يوجد حساب مسجّل بهذا البريد الإلكتروني بالفعل",
-  "this email account has already been confirmed":
-    "تم تأكيد هذا البريد بالفعل",
+  "this email account has already been confirmed": "تم تأكيد هذا البريد بالفعل",
   "this code provided in incorrect": "الكود غير صحيح",
   "invalid otp": "الكود غير صحيح",
   "this verification code has expired , please resend otp again":
@@ -60,7 +59,8 @@ const exact: Record<string, string> = {
     "المنتج المراد تقييمه غير موجود",
 
   // الملفات
-  "unsupported file format": "صيغة الملف غير مدعومة",
+  "unsupported file format": "صيغة الملف غير مدعومة (JPG أو PNG فقط)",
+  "file too large": "حجم الصورة أكبر من 5 ميجا",
 };
 
 const patterns: Array<[RegExp, (m: RegExpMatchArray) => string]> = [
@@ -74,8 +74,7 @@ const patterns: Array<[RegExp, (m: RegExpMatchArray) => string]> = [
   ],
   [
     /^cannot add\. combined cart total (\d+) exceeds available stock (\d+)$/,
-    (m) =>
-      `لا يمكن الإضافة: عندك ${m[1]} في السلة والمتاح ${m[2]} قطعة فقط`,
+    (m) => `لا يمكن الإضافة: عندك ${m[1]} في السلة والمتاح ${m[2]} قطعة فقط`,
   ],
   [
     /^review not found or you are not authorized to (update|delete) this review$/,

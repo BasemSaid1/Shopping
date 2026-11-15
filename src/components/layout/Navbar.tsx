@@ -35,7 +35,11 @@ export default function Navbar({
   const [loggingOut, setLoggingOut] = useState(false);
 
   const navLinks = isLoggedIn
-    ? [...links, { href: "/orders", label: "طلباتي" }]
+    ? [
+        ...links,
+        { href: "/orders", label: "طلباتي" },
+        { href: "/profile", label: "حسابي" },
+      ]
     : links;
 
   const isActive = (href: string) =>
