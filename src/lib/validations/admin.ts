@@ -49,6 +49,40 @@ export const productFormSchema = z.object({
   gallery: z.custom<File[]>(),
 });
 
+export const couponFormSchema = z.object({
+  code: z
+    .string()
+    .trim()
+    .min(3, "الكود لا يقل عن 3 أحرف")
+    .max(20, "الكود لا يزيد عن 20 حرفًا")
+    .regex(/^[A-Za-z0-9_-]+$/, "حروف إنجليزية وأرقام و - _ فقط"),
+  discountPercentage: z
+    .string()
+    .trim()
+    .min(1, "نسبة الخصم مطلوبة")
+    .refine(
+      (v) =>
+        Number.isInteger(toNumber(v)) && toNumber(v) >= 1 && toNumber(v) <= 100,
+      "النسبة رقم صحيح من 1 إلى 100",
+    ),
+  maxUsageCount: z
+    .string()
+    .trim()
+    .min(1, "عدد مرات الاستخدام مطلوب")
+    .refine(
+      (v) => Number.isInteger(toNumber(v)) && toNumber(v) >= 1,
+      "لازم يكون رقم صحيح 1 أو أكبر",
+    ),
+  expiryDate: z
+    .string()
+    .min(1, "تاريخ الانتهاء مطلوب")
+    .refine(
+      (v) => new Date(`${v}T23:59:59`).getTime() > Date.now(),
+      "تاريخ الانتهاء لازم يكون في المستقبل",
+    ),
+});
+
 export type CategoryFormValues = z.infer<typeof categoryFormSchema>;
 export type BrandFormValues = z.infer<typeof brandFormSchema>;
 export type ProductFormValues = z.infer<typeof productFormSchema>;
+export type CouponFormValues = z.infer<typeof couponFormSchema>;

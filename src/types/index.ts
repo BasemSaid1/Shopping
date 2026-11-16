@@ -123,3 +123,26 @@ export interface Review {
   mine: boolean;
   createdAt: string;
 }
+
+export interface Coupon {
+  _id: string;
+  code: string;
+  discountPercentage: number;
+  maxUsageCount: number;
+  usedCount: number;
+  expiryDate: string;
+}
+
+export interface AdminOrder extends Order {
+  user: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+  } | null;
+}
+
+export interface AdminOrdersResult {
+  orders: AdminOrder[];
+  pagination: Pagination;
+}

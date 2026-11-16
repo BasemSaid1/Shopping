@@ -102,6 +102,12 @@ const exact: Record<string, string> = {
   // الملفات
   "unsupported file format": "صيغة الملف غير مدعومة (JPG أو PNG أو WebP)",
   "file too large": "حجم الصورة أكبر من 5 ميجا",
+
+  "invalid order status": "حالة الطلب غير صالحة",
+  "invalid status transition": "لا يمكن نقل الطلب لهذه الحالة",
+  "card order must be paid first": "طلب البطاقة لازم يتدفع الأول",
+  "order status has changed, please refresh":
+    "حالة الطلب اتغيرت، حدّث الصفحة وجرّب تاني",
 };
 
 const patterns: Array<[RegExp, (m: RegExpMatchArray) => string]> = [
