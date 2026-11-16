@@ -1,13 +1,18 @@
-const MAX_DIMENSION = 1600;
-const SKIP_BELOW_BYTES = 800 * 1024;
+interface CompressOptions {
+  maxDimension?: number;
+  skipBelowBytes?: number;
+}
 
-export async function compressImage(file: File): Promise<File> {
-  if (file.size <= SKIP_BELOW_BYTES) return file;
+export async function compressImage(
+  file: File,
+  { maxDimension = 1600, skipBelowBytes = 800 * 1024 }: CompressOptions = {},
+): Promise<File> {
+  if (file.size <= skipBelowBytes) return file;
 
   const bitmap = await createImageBitmap(file);
   const scale = Math.min(
     1,
-    MAX_DIMENSION / Math.max(bitmap.width, bitmap.height),
+    maxDimension / Math.max(bitmap.width, bitmap.height),
   );
   const width = Math.round(bitmap.width * scale);
   const height = Math.round(bitmap.height * scale);

@@ -31,6 +31,24 @@ const exact: Record<string, string> = {
   "you do not have permission to perform this action":
     "ليس لديك صلاحية لتنفيذ هذا الإجراء",
 
+  "product title must be string": "عنوان المنتج غير صالح",
+  "product title is required": "عنوان المنتج مطلوب",
+  "title must be longer than or equal to 2 characters":
+    "العنوان لا يقل عن حرفين",
+  "title must be shorter than or equal to 200 characters":
+    "العنوان لا يزيد عن 200 حرف",
+  "description must be a string": "الوصف غير صالح",
+  "price must be a valid number": "السعر لازم يكون رقم",
+  "price cannot be zero or negative value": "السعر لازم يكون أكبر من صفر",
+  "stock must be a valid number": "المخزون لازم يكون رقم",
+  "stock cannot be negative value": "المخزون لا يمكن أن يكون سالبًا",
+  "stock must be an integer": "المخزون لازم يكون رقم صحيح",
+  "invalid brand id format": "الماركة غير صالحة",
+  "invalid category id format": "الفئة غير صالحة",
+  "product main image is required": "الصورة الرئيسية مطلوبة",
+  "the assigned brand not exists": "الماركة المختارة غير موجودة",
+  "unexpected field": "عدد الصور أكبر من المسموح (10 كحد أقصى للمعرض)",
+
   "brand name is required": "اسم الماركة مطلوب",
   "brand name must be between 2 and 20 characters long":
     "اسم الماركة يجب أن يكون بين 2 و20 حرفًا",
@@ -107,6 +125,10 @@ const patterns: Array<[RegExp, (m: RegExpMatchArray) => string]> = [
   [
     /^database integrity failure: one or more provided category ids do not exists ins db$/,
     () => "إحدى الفئات المختارة غير موجودة",
+  ],
+  [
+    /^business role : the brand .+ does not belong to or support specific category$/,
+    () => "الماركة المختارة لا تتبع هذه الفئة",
   ],
 ];
 
