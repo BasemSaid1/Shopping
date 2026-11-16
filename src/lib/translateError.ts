@@ -31,6 +31,15 @@ const exact: Record<string, string> = {
   "you do not have permission to perform this action":
     "ليس لديك صلاحية لتنفيذ هذا الإجراء",
 
+  "brand name is required": "اسم الماركة مطلوب",
+  "brand name must be between 2 and 20 characters long":
+    "اسم الماركة يجب أن يكون بين 2 و20 حرفًا",
+  "brand name already exists": "اسم الماركة مستخدم بالفعل",
+  "brand logo is required": "لوجو الماركة مطلوب",
+  "categories must be as an array": "اختر فئة واحدة على الأقل",
+  "at least one category id must exist": "اختر فئة واحدة على الأقل",
+  "each category id must be a valid mongodb objectid": "فئة غير صالحة",
+
   // المنتجات والسلة
   "product not found": "المنتج غير موجود",
   "product not found in cart": "المنتج غير موجود في السلة",
@@ -93,6 +102,11 @@ const patterns: Array<[RegExp, (m: RegExpMatchArray) => string]> = [
   [
     /^review not found or you are not authorized to (update|delete) this review$/,
     () => "التقييم غير موجود أو ليس لديك صلاحية تعديله",
+  ],
+  [/^brand with id .+ not found$/, () => "الماركة غير موجودة"],
+  [
+    /^database integrity failure: one or more provided category ids do not exists ins db$/,
+    () => "إحدى الفئات المختارة غير موجودة",
   ],
 ];
 
