@@ -184,12 +184,12 @@ export default function ForgotPasswordPage() {
       {/* Right Side - Image */}
       <section className="relative hidden min-h-screen overflow-hidden lg:block">
         <img
-          src="./images/auth2.jfif"
+          src="./images/auth.jfif"
           alt="Shopping store"
           className="absolute inset-0 h-full w-full object-cover"
         />
 
-        <div className="absolute inset-0 bg-gradient-to-br from-[#312e81]/80 via-[#4338ca]/50 to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/10" />
       </section>
     </main>
   );

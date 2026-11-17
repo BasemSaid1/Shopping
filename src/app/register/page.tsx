@@ -349,7 +349,7 @@ export default function RegisterPage() {
       {/* Right Image */}
       <section className="relative hidden min-h-screen overflow-hidden lg:block">
         <img
-          src="./images/auth2.jfif"
+          src="./images/auth.jfif"
           alt="Shopping store"
           className="absolute inset-0 h-full w-full object-cover"
         />
