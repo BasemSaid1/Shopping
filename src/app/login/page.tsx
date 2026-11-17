@@ -202,18 +202,6 @@ export default function LoginPage() {
       {/* Login Form */}
       <section className="flex min-h-screen items-center justify-center px-5 py-10 sm:px-10 lg:px-14 xl:px-20">
         <div className="w-full max-w-md">
-          {/* Brand */}
-          <Link
-            href="/"
-            className="mb-12 inline-flex items-center gap-2 text-2xl font-extrabold tracking-tight text-gray-900"
-          >
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#6366f1] text-white">
-              S
-            </span>
-            Shopping
-            <span className="text-[#6366f1]">.</span>
-          </Link>
-
           <div className="mb-9">
             <p className="mb-3 text-sm font-semibold tracking-wide text-[#6366f1]">
               WELCOME BACK
@@ -353,23 +341,6 @@ export default function LoginPage() {
         />
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/10" />
-
-        <div className="absolute inset-x-0 bottom-0 p-12 text-white xl:p-16">
-          <span className="mb-6 inline-block rounded-full border border-white/30 bg-white/10 px-5 py-2 text-sm font-medium backdrop-blur-md">
-            Your Shopping Experience
-          </span>
-
-          <h2 className="mb-5 max-w-lg text-4xl font-extrabold leading-tight xl:text-5xl">
-            اكتشف تجربة تسوق مختلفة تماماً.
-          </h2>
-
-          <p className="max-w-md text-base leading-8 text-white/80">
-            كل اللي بتحبه في مكان واحد. استمتع بتجربة تسوق سهلة وسريعة واكتشف
-            أفضل المنتجات والعروض.
-          </p>
-
-          <div className="mt-10 h-1 w-20 rounded-full bg-[#818cf8]" />
-        </div>
       </section>
     </main>
   );
