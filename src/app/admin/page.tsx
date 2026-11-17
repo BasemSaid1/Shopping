@@ -7,6 +7,7 @@ import {
   FaTicketAlt,
 } from "react-icons/fa";
 import type { IconType } from "react-icons";
+import AdminStats from "@/components/admin/AdminStats";
 
 const sections: {
   href: string;
@@ -57,6 +58,10 @@ export default function AdminHomePage() {
     <div>
       <h1 className="text-2xl font-bold text-gray-800">لوحة التحكم</h1>
       <p className="mt-1 text-sm text-gray-500">اختر القسم اللي عايز تديره</p>
+
+      <AdminStats />
+
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3"></div>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {sections.map(({ href, title, text, icon: Icon, color }) => (

@@ -146,3 +146,11 @@ export interface AdminOrdersResult {
   orders: AdminOrder[];
   pagination: Pagination;
 }
+
+export interface AdminStats {
+  totalOrders: number;
+  orders: Partial<Record<OrderStatus, number>>;
+  revenue: number;
+  lowStock: number;
+  outOfStock: number;
+}
