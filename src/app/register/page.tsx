@@ -200,10 +200,8 @@ export default function RegisterPage() {
 
   return (
     <main className="min-h-screen bg-[#f8f8fa] lg:grid lg:grid-cols-2">
-      {/* Register Form */}
       <section className="flex min-h-screen items-center justify-center px-5 py-10 sm:px-10 lg:px-14 xl:px-20">
         <div className="w-full max-w-md">
-          {/* Heading */}
           <div className="mb-7">
             <h1 className="mb-3 text-3xl font-extrabold text-gray-900 sm:text-4xl">
               إنشاء حساب جديد
@@ -215,14 +213,12 @@ export default function RegisterPage() {
           </div>
 
           <form noValidate onSubmit={formik.handleSubmit} className="space-y-4">
-            {/* Server Error */}
             {serverError && (
               <p className="rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-600">
                 {serverError}
               </p>
             )}
 
-            {/* First & Last Name */}
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="mb-2 block text-sm font-semibold text-gray-700">
@@ -251,7 +247,6 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            {/* Email */}
             <div>
               <label className="mb-2 block text-sm font-semibold text-gray-700">
                 البريد الإلكتروني
@@ -266,7 +261,6 @@ export default function RegisterPage() {
               />
             </div>
 
-            {/* Password */}
             <div>
               <label className="mb-2 block text-sm font-semibold text-gray-700">
                 كلمة المرور
@@ -281,7 +275,6 @@ export default function RegisterPage() {
               />
             </div>
 
-            {/* Confirm Password */}
             <div>
               <label className="mb-2 block text-sm font-semibold text-gray-700">
                 تأكيد كلمة المرور
@@ -296,7 +289,6 @@ export default function RegisterPage() {
               />
             </div>
 
-            {/* Gender */}
             <div>
               <label className="mb-2 block text-sm font-semibold text-gray-700">
                 النوع
@@ -311,7 +303,6 @@ export default function RegisterPage() {
               </select>
             </div>
 
-            {/* Submit */}
             <button
               type="submit"
               disabled={formik.isSubmitting}
@@ -322,17 +313,14 @@ export default function RegisterPage() {
               {formik.isSubmitting ? "جاري إنشاء الحساب..." : "إنشاء حساب جديد"}
             </button>
 
-            {/* Divider */}
             <div className="flex items-center gap-4 py-1 text-sm text-gray-400">
               <span className="h-px flex-1 bg-gray-200" />
               أو
               <span className="h-px flex-1 bg-gray-200" />
             </div>
 
-            {/* Google Login */}
             <GoogleLoginButton onFail={setServerError} />
 
-            {/* Login Link */}
             <p className="pt-2 text-center text-sm text-gray-500">
               عندك حساب بالفعل؟{" "}
               <Link
@@ -346,7 +334,6 @@ export default function RegisterPage() {
         </div>
       </section>
 
-      {/* Right Image */}
       <section className="relative hidden min-h-screen overflow-hidden lg:block">
         <img
           src="./images/auth.jfif"

@@ -199,7 +199,6 @@ export default function LoginPage() {
 
   return (
     <main className="min-h-screen bg-[#f8f8fa] lg:grid lg:grid-cols-2">
-      {/* Login Form */}
       <section className="flex min-h-screen items-center justify-center px-5 py-10 sm:px-10 lg:px-14 xl:px-20">
         <div className="w-full max-w-md">
           <div className="mb-9">
@@ -332,7 +331,6 @@ export default function LoginPage() {
         </div>
       </section>
 
-      {/* Right Image */}
       <section className="relative hidden min-h-screen overflow-hidden lg:block">
         <img
           src="./images/auth.jfif"
