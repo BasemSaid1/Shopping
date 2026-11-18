@@ -104,7 +104,7 @@ export default function BrandFormModal({
             value={formik.values.name}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+            className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm font-medium text-gray-900 caret-[#6366f1] placeholder:text-gray-400 outline-none transition focus:border-[#6366f1] focus:ring-4 focus:ring-[#6366f1]/10"
           />
           {formik.touched.name && formik.errors.name && (
             <p className="mt-1 text-xs text-red-600">{formik.errors.name}</p>

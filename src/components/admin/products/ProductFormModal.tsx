@@ -37,7 +37,7 @@ const MAX_TOTAL_BYTES = 4 * 1024 * 1024;
 const MAX_GALLERY = 10;
 
 const inputClass =
-  "w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100";
+  "w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm font-medium text-gray-900 caret-[#6366f1] placeholder:text-gray-400 outline-none transition focus:border-[#6366f1] focus:ring-4 focus:ring-[#6366f1]/10";
 
 function FieldError({ children }: { children?: string }) {
   return children ? (
