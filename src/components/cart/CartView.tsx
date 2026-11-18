@@ -19,6 +19,7 @@ import { getErrorMessage } from "@/lib/getErrorMessage";
 import { getImageUrl } from "@/lib/image";
 import { formatPrice } from "@/lib/format";
 import type { ApiResponse, Cart, CartItem, Product } from "@/types";
+import { cartItemKey, getItemStock } from "@/lib/variants";
 
 type AvailableItem = CartItem & { product: Product };
 
@@ -68,11 +69,11 @@ export default function CartView() {
   const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
 
   async function mutate(
-    productId: string,
+    key: string,
     request: () => Promise<AxiosResponse<ApiResponse<Cart>>>,
   ) {
     setError("");
-    setBusyId(productId);
+    setBusyId(key);
 
     try {
       const { data } = await request();
@@ -89,14 +90,33 @@ export default function CartView() {
     }
   }
 
-  const updateQuantity = (productId: string, action: "increase" | "decrease") =>
-    mutate(productId, () =>
-      api.patch<ApiResponse<Cart>>(`/cart/item/${productId}`, { action }),
+  // const updateQuantity = (productId: string, action: "increase" | "decrease") =>
+  //   mutate(productId, () =>
+  //     api.patch<ApiResponse<Cart>>(`/cart/item/${productId}`, { action }),
+  //   );
+
+  // const removeItem = (productId: string) =>
+  //   mutate(productId, () =>
+  //     api.delete<ApiResponse<Cart>>(`/cart/item/${productId}`),
+  //   );
+
+  const updateQuantity = (
+    item: AvailableItem,
+    action: "increase" | "decrease",
+  ) =>
+    mutate(cartItemKey(item), () =>
+      api.patch<ApiResponse<Cart>>(
+        `/cart/item/${item.product._id}`,
+        { action },
+        { params: { variantId: item.variantId } },
+      ),
     );
 
-  const removeItem = (productId: string) =>
-    mutate(productId, () =>
-      api.delete<ApiResponse<Cart>>(`/cart/item/${productId}`),
+  const removeItem = (item: AvailableItem) =>
+    mutate(cartItemKey(item), () =>
+      api.delete<ApiResponse<Cart>>(`/cart/item/${item.product._id}`, {
+        params: { variantId: item.variantId },
+      }),
     );
 
   if (loading) {
@@ -153,11 +173,14 @@ export default function CartView() {
           {items.map((item) => {
             const { product } = item;
             const image = getImageUrl(product.image);
-            const busy = busyId === product._id;
+            const key = cartItemKey(item);
+            const busy = busyId === key;
+            // null = الخيار اتحذف أو اتغيّر ومبقاش متاح
+            const stock = getItemStock(item);
 
             return (
               <li
-                key={product._id}
+                key={key}
                 className={`flex gap-4 rounded-2xl border border-gray-200 bg-white p-4 transition ${
                   busy ? "opacity-60" : ""
                 }`}
@@ -186,14 +209,24 @@ export default function CartView() {
                       >
                         {product.title}
                       </Link>
+                      {item.variantLabel && (
+                        <p className="mt-1 text-sm text-gray-500">
+                          {item.variantLabel}
+                        </p>
+                      )}
                       <p className="mt-1 text-sm text-gray-500">
                         {formatPrice(item.pricePerUnit)}
                       </p>
+                      {stock === null && (
+                        <p className="mt-1 text-sm font-semibold text-red-600">
+                          هذا الخيار لم يعد متاحًا، احذفه وأضفه من جديد
+                        </p>
+                      )}
                     </div>
 
                     <button
                       type="button"
-                      onClick={() => removeItem(product._id)}
+                      onClick={() => removeItem(item)}
                       disabled={busy}
                       aria-label="حذف من السلة"
                       className="rounded-lg p-2 text-gray-400 transition hover:bg-red-50 hover:text-red-600 disabled:opacity-50"
@@ -206,7 +239,7 @@ export default function CartView() {
                     <div className="flex items-center rounded-lg border border-gray-300">
                       <button
                         type="button"
-                        onClick={() => updateQuantity(product._id, "decrease")}
+                        onClick={() => updateQuantity(item, "decrease")}
                         disabled={busy || item.quantity <= 1}
                         aria-label="تقليل الكمية"
                         className="p-2.5 text-gray-600 hover:text-blue-600 disabled:text-gray-300"
@@ -218,8 +251,10 @@ export default function CartView() {
                       </span>
                       <button
                         type="button"
-                        onClick={() => updateQuantity(product._id, "increase")}
-                        disabled={busy || item.quantity >= product.stock}
+                        onClick={() => updateQuantity(item, "increase")}
+                        disabled={
+                          busy || stock === null || item.quantity >= stock
+                        }
                         aria-label="زيادة الكمية"
                         className="p-2.5 text-gray-600 hover:text-blue-600 disabled:text-gray-300"
                       >

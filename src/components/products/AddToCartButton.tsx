@@ -16,10 +16,15 @@ import { getErrorMessage } from "@/lib/getErrorMessage";
 
 export default function AddToCartButton({
   productId,
+  variantId,
   stock,
+  blockedReason,
 }: {
   productId: string;
+  variantId?: string;
   stock: number;
+  // لو المنتج له خيارات ولسه ما اتحددتش: بنعرض الرسالة دي بدل الزرار
+  blockedReason?: string;
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -34,8 +39,7 @@ export default function AddToCartButton({
     setLoading(true);
 
     try {
-      await api.post("/cart/add", { productId, quantity });
-      setAdded(true);
+      await api.post("/cart/add", { productId, variantId, quantity });
       setAdded(true);
       router.refresh();
     } catch (err) {
@@ -47,6 +51,17 @@ export default function AddToCartButton({
     } finally {
       setLoading(false);
     }
+  }
+
+  if (blockedReason) {
+    return (
+      <button
+        disabled
+        className="w-full cursor-not-allowed rounded-lg bg-gray-200 py-3 font-semibold text-gray-500"
+      >
+        {blockedReason}
+      </button>
+    );
   }
 
   if (stock === 0) {

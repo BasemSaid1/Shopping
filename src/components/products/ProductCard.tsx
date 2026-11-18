@@ -3,10 +3,12 @@ import { FaImage } from "react-icons/fa";
 import type { Product } from "@/types";
 import { getImageUrl } from "@/lib/image";
 import { formatPrice } from "@/lib/format";
+import { getPriceRange } from "@/lib/variants";
 
 export default function ProductCard({ product }: { product: Product }) {
   const image = getImageUrl(product.image);
   const outOfStock = product.stock === 0;
+  const { min, max } = getPriceRange(product);
 
   return (
     <Link
@@ -42,7 +44,12 @@ export default function ProductCard({ product }: { product: Product }) {
           {product.title}
         </h3>
         <p className="mt-auto pt-2 text-lg font-bold text-blue-600">
-          {formatPrice(product.price)}
+          {min !== max && (
+            <span className="me-1 text-xs font-semibold text-gray-500">
+              ابتداءً من
+            </span>
+          )}
+          {formatPrice(min)}
         </p>
       </div>
     </Link>

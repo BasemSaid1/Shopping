@@ -300,7 +300,10 @@ export default function AdminOrdersView() {
                   {o.items.map((item, i) => {
                     const image = getImageUrl(item.product?.image);
                     return (
-                      <li key={i} className="flex items-center gap-3">
+                      <li
+                        key={`${i}:${item.variantId ?? ""}`}
+                        className="flex items-center gap-3"
+                      >
                         <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gray-100">
                           {image ? (
                             <img
@@ -313,9 +316,16 @@ export default function AdminOrdersView() {
                             <FaImage className="text-gray-300" />
                           )}
                         </div>
-                        <p className="min-w-0 flex-1 truncate text-sm text-gray-700">
-                          {item.product?.title ?? "منتج محذوف"}
-                        </p>
+                        <div className="min-w-0 flex-1">
+                          <p className="truncate text-sm text-gray-700">
+                            {item.product?.title ?? "منتج محذوف"}
+                          </p>
+                          {item.variantLabel && (
+                            <p className="truncate text-xs text-gray-500">
+                              {item.variantLabel}
+                            </p>
+                          )}
+                        </div>
                         <p className="text-xs text-gray-500">
                           {item.quantity.toLocaleString("ar-EG")} ×{" "}
                           {formatPrice(item.priceSnapShot)}

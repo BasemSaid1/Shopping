@@ -26,6 +26,8 @@ export interface Product {
   stock: number;
   image: string;
   gallery: string[];
+  options?: ProductOption[];
+  variants?: ProductVariant[];
   category: NamedRef | null;
   brand: NamedRef | null;
   createdAt: string;
@@ -47,6 +49,8 @@ export interface ProductsResult {
 
 export interface CartItem {
   product: Product | null;
+  variantId?: string;
+  variantLabel?: string;
   quantity: number;
   pricePerUnit: number;
   subTotal: number;
@@ -70,6 +74,8 @@ export type PaymentMethod = "CARD" | "CASH";
 
 export interface OrderItem {
   product: Pick<Product, "_id" | "title" | "image" | "price"> | null;
+  variantId?: string;
+  variantLabel?: string;
   quantity: number;
   priceSnapShot: number;
 }
@@ -153,4 +159,16 @@ export interface AdminStats {
   revenue: number;
   lowStock: number;
   outOfStock: number;
+}
+
+export interface ProductOption {
+  name: string;
+  values: string[];
+}
+
+export interface ProductVariant {
+  _id: string;
+  attributes: { name: string; value: string }[];
+  price: number;
+  stock: number;
 }

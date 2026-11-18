@@ -29,6 +29,7 @@ import {
 } from "@/lib/validations/checkout";
 import FormInput from "@/components/FormInput";
 import type { ApiResponse, CartItem, Product } from "@/types";
+import { cartItemKey } from "@/lib/variants";
 
 type AvailableItem = CartItem & { product: Product };
 type AppliedCoupon = { code: string; discountPercentage: number };
@@ -341,7 +342,7 @@ export default function CheckoutView() {
           {items.map((item) => {
             const image = getImageUrl(item.product.image);
             return (
-              <li key={item.product._id} className="flex items-center gap-3">
+              <li key={cartItemKey(item)} className="flex items-center gap-3">
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gray-100 text-gray-300">
                   {image ? (
                     <img
@@ -357,6 +358,11 @@ export default function CheckoutView() {
                   <p className="line-clamp-1 text-sm font-semibold text-gray-800">
                     {item.product.title}
                   </p>
+                  {item.variantLabel && (
+                    <p className="line-clamp-1 text-xs text-gray-500">
+                      {item.variantLabel}
+                    </p>
+                  )}
                   <p className="text-xs text-gray-500">
                     الكمية: {item.quantity.toLocaleString("ar-EG")}
                   </p>

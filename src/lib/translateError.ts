@@ -103,6 +103,14 @@ const exact: Record<string, string> = {
   "unsupported file format": "صيغة الملف غير مدعومة (JPG أو PNG أو WebP)",
   "file too large": "حجم الصورة أكبر من 5 ميجا",
 
+  "please select the product options": "اختر خيارات المنتج أولًا",
+  "selected option is not available":
+    "الخيار المختار لم يعد متاحًا، احذفه من السلة وأضفه من جديد",
+  "this product has no options": "هذا المنتج ليس له خيارات",
+  "invalid variant id": "الخيار غير صالح",
+  "some items in your cart are no longer available in the requested quantity":
+    "بعض المنتجات في سلتك لم تعد متوفرة بالكمية المطلوبة، راجع السلة",
+
   "invalid order status": "حالة الطلب غير صالحة",
   "invalid status transition": "لا يمكن نقل الطلب لهذه الحالة",
   "card order must be paid first": "طلب البطاقة لازم يتدفع الأول",

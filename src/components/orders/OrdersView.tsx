@@ -92,7 +92,10 @@ function OrderCard({
           const image = product ? getImageUrl(product.image) : null;
 
           return (
-            <li key={product?._id ?? index} className="flex items-center gap-3">
+            <li
+              key={`${product?._id ?? "x"}:${item.variantId ?? ""}:${index}`}
+              className="flex items-center gap-3"
+            >
               <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gray-100 text-gray-300">
                 {image ? (
                   <img
@@ -116,6 +119,11 @@ function OrderCard({
                 ) : (
                   <p className="text-sm font-semibold text-gray-500">
                     منتج غير متاح
+                  </p>
+                )}
+                {item.variantLabel && (
+                  <p className="line-clamp-1 text-xs text-gray-500">
+                    {item.variantLabel}
                   </p>
                 )}
                 <p className="text-xs text-gray-500">

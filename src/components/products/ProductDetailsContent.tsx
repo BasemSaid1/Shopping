@@ -4,35 +4,12 @@ import axios from "axios";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { getProduct } from "@/services/products";
 import { getImageUrl } from "@/lib/image";
-import { formatPrice } from "@/lib/format";
 import type { Product } from "@/types";
 import ProductGallery from "./ProductGallery";
-import AddToCartButton from "./AddToCartButton";
+import ProductPurchase from "./ProductPurchase";
 import ReviewsSection from "@/components/reviews/ReviewsSection";
 
 const MONGO_ID = /^[a-f\d]{24}$/i;
-
-function StockBadge({ stock }: { stock: number }) {
-  if (stock === 0) {
-    return (
-      <span className="rounded-full bg-red-50 px-3 py-1 text-sm font-semibold text-red-600">
-        غير متوفر
-      </span>
-    );
-  }
-  if (stock <= 5) {
-    return (
-      <span className="rounded-full bg-orange-50 px-3 py-1 text-sm font-semibold text-orange-600">
-        متبقي {stock.toLocaleString("ar-EG")} فقط
-      </span>
-    );
-  }
-  return (
-    <span className="rounded-full bg-green-50 px-3 py-1 text-sm font-semibold text-green-600">
-      متوفر
-    </span>
-  );
-}
 
 export default async function ProductDetailsContent({
   params,
@@ -117,22 +94,13 @@ export default async function ProductDetailsContent({
             {product.title}
           </h1>
 
-          <div className="flex flex-wrap items-center gap-4">
-            <p className="text-3xl font-bold text-blue-600">
-              {formatPrice(product.price)}
-            </p>
-            <StockBadge stock={product.stock} />
-          </div>
-
-          {product.description && (
-            <p className="whitespace-pre-line leading-8 text-gray-600">
-              {product.description}
-            </p>
-          )}
-
-          <div className="border-t border-gray-200 pt-5">
-            <AddToCartButton productId={product._id} stock={product.stock} />
-          </div>
+          <ProductPurchase product={product}>
+            {product.description && (
+              <p className="whitespace-pre-line leading-8 text-gray-600">
+                {product.description}
+              </p>
+            )}
+          </ProductPurchase>
         </div>
       </div>
       <ReviewsSection productId={product._id} />
