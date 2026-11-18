@@ -20,14 +20,7 @@ function formatDay(iso: string) {
   });
 }
 
-function Status({ coupon, now }: { coupon: Coupon; now: number }) {
-  if (new Date(coupon.expiryDate).getTime() <= now) {
-    return (
-      <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-semibold text-gray-600">
-        منتهي
-      </span>
-    );
-  }
+function Status({ coupon }: { coupon: Coupon }) {
   if (coupon.usedCount >= coupon.maxUsageCount) {
     return (
       <span className="rounded-full bg-red-50 px-2 py-0.5 text-xs font-semibold text-red-600">
@@ -48,7 +41,6 @@ export default function AdminCouponsView() {
     "/admin/coupons",
   );
   const [formFor, setFormFor] = useState<Coupon | "new" | null>(null);
-  const [now] = useState(() => Date.now());
 
   const router = useRouter();
   const [deleting, setDeleting] = useState<Coupon | null>(null);
@@ -132,7 +124,7 @@ export default function AdminCouponsView() {
                     <span className="rounded-full bg-blue-50 px-2 py-0.5 text-xs font-bold text-blue-700">
                       خصم {c.discountPercentage.toLocaleString("ar-EG")}%
                     </span>
-                    <Status coupon={c} now={now} />
+                    <Status coupon={c} />
                   </div>
 
                   <div className="mt-2 flex items-center gap-3">
