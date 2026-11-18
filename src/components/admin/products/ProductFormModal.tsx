@@ -13,10 +13,24 @@ import {
   productFormSchema,
   type ProductFormValues,
 } from "@/lib/validations/admin";
+import {
+  initialDraft,
+  toPayload,
+  validateVariants,
+  type OptionDraft,
+  type VariantRow,
+} from "@/lib/variantDraft";
 import type { Brand, Category, Product } from "@/types";
 import AdminModal from "../AdminModal";
 import ImagePicker from "../ImagePicker";
 import MultiImagePicker from "../MultiImagePicker";
+import VariantsEditor from "./VariantsEditor";
+
+type ProductFormState = ProductFormValues & {
+  hasVariants: boolean;
+  options: OptionDraft[];
+  variantRows: VariantRow[];
+};
 
 // Vercel بيرفض أي طلب أكبر من حوالي 4.5MB
 const MAX_TOTAL_BYTES = 4 * 1024 * 1024;
@@ -48,7 +62,10 @@ export default function ProductFormModal({
   const editing = Boolean(product);
   const [serverError, setServerError] = useState("");
 
-  const formik = useFormik<ProductFormValues>({
+  const draft = initialDraft(product);
+  const hadVariants = (product?.variants?.length ?? 0) > 0;
+
+  const formik = useFormik<ProductFormState>({
     initialValues: {
       title: product?.title ?? "",
       description: product?.description ?? "",
@@ -58,11 +75,24 @@ export default function ProductFormModal({
       brand: product?.brand?._id ?? "",
       image: null,
       gallery: [],
+      hasVariants: hadVariants,
+      options: draft.options,
+      variantRows: draft.rows,
     },
     validate: (values) => {
+      // لو المنتج له متغيّرات، السعر والمخزون العاديين مش مطلوبين
       const errors: Record<string, string> = {
-        ...zodValidate(productFormSchema)(values),
+        ...zodValidate(productFormSchema)(
+          values.hasVariants ? { ...values, price: "1", stock: "0" } : values,
+        ),
       };
+      if (values.hasVariants) {
+        const variantsError = validateVariants(
+          values.options,
+          values.variantRows,
+        );
+        if (variantsError) errors.variantsError = variantsError;
+      }
       if (!editing && !values.image) errors.image = "الصورة الرئيسية مطلوبة";
 
       const total =
@@ -82,8 +112,19 @@ export default function ProductFormModal({
       if (values.description.trim()) {
         form.append("description", values.description.trim());
       }
-      form.append("price", String(toNumber(values.price)));
-      form.append("stock", String(toNumber(values.stock)));
+      if (values.hasVariants) {
+        const payload = toPayload(values.options, values.variantRows);
+        form.append("options", JSON.stringify(payload.options));
+        form.append("variants", JSON.stringify(payload.variants));
+      } else {
+        form.append("price", String(toNumber(values.price)));
+        form.append("stock", String(toNumber(values.stock)));
+        // تحويل منتج له متغيّرات لمنتج عادي
+        if (hadVariants) {
+          form.append("options", "[]");
+          form.append("variants", "[]");
+        }
+      }
       form.append("category", values.category);
       form.append("brand", values.brand);
       if (values.image) form.append("file", values.image);
@@ -176,46 +217,93 @@ export default function ProductFormModal({
           <FieldError>{show("description")}</FieldError>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label
-              htmlFor="price"
-              className="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              السعر (ج.م)
-            </label>
-            <input
-              id="price"
-              name="price"
-              inputMode="decimal"
-              autoComplete="off"
-              value={formik.values.price}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className={inputClass}
-            />
-            <FieldError>{show("price")}</FieldError>
+        <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-gray-200 bg-gray-50 p-3">
+          <input
+            type="checkbox"
+            checked={formik.values.hasVariants}
+            onChange={(e) => {
+              const on = e.target.checked;
+              formik.setFieldValue("hasVariants", on);
+              if (on && formik.values.options.length === 0) {
+                formik.setFieldValue("options", [{ name: "", values: [] }]);
+              }
+            }}
+            className="mt-1 h-4 w-4 accent-blue-600"
+          />
+          <span>
+            <span className="block text-sm font-semibold text-gray-800">
+              المنتج له خيارات (مقاس، لون، سعة...)
+            </span>
+            <span className="block text-xs text-gray-500">
+              كل تركيبة ليها سعر ومخزون خاص بيها.
+            </span>
+          </span>
+        </label>
+
+        {hadVariants && !formik.values.hasVariants && (
+          <p className="rounded-lg bg-yellow-50 px-3 py-2 text-xs text-yellow-700">
+            هيتحول لمنتج عادي، والتركيبات والأسعار الخاصة بيها هتتمسح. لازم تحدد
+            سعر ومخزون واحد.
+          </p>
+        )}
+
+        {formik.values.hasVariants ? (
+          <VariantsEditor
+            options={formik.values.options}
+            rows={formik.values.variantRows}
+            error={
+              submitted
+                ? (formik.errors as Record<string, string | undefined>)
+                    .variantsError
+                : undefined
+            }
+            onChange={(options, rows) => {
+              formik.setFieldValue("options", options);
+              formik.setFieldValue("variantRows", rows);
+            }}
+          />
+        ) : (
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label
+                htmlFor="price"
+                className="mb-2 block text-sm font-semibold text-gray-700"
+              >
+                السعر (ج.م)
+              </label>
+              <input
+                id="price"
+                name="price"
+                inputMode="decimal"
+                autoComplete="off"
+                value={formik.values.price}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={inputClass}
+              />
+              <FieldError>{show("price")}</FieldError>
+            </div>
+            <div>
+              <label
+                htmlFor="stock"
+                className="mb-2 block text-sm font-semibold text-gray-700"
+              >
+                المخزون
+              </label>
+              <input
+                id="stock"
+                name="stock"
+                inputMode="numeric"
+                autoComplete="off"
+                value={formik.values.stock}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={inputClass}
+              />
+              <FieldError>{show("stock")}</FieldError>
+            </div>
           </div>
-          <div>
-            <label
-              htmlFor="stock"
-              className="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              المخزون
-            </label>
-            <input
-              id="stock"
-              name="stock"
-              inputMode="numeric"
-              autoComplete="off"
-              value={formik.values.stock}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className={inputClass}
-            />
-            <FieldError>{show("stock")}</FieldError>
-          </div>
-        </div>
+        )}
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>

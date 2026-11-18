@@ -1,7 +1,5 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element */
-
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -29,6 +27,7 @@ import type {
 import { ListEmpty, ListError } from "@/components/ListStates";
 import ConfirmDialog from "../ConfirmDialog";
 import ProductFormModal from "./ProductFormModal";
+import { getPriceRange } from "@/lib/variants";
 
 const PAGE_SIZE = 10;
 
@@ -237,8 +236,18 @@ export default function AdminProductsView() {
                   </p>
                   <div className="mt-1.5 flex flex-wrap items-center gap-2">
                     <span className="text-sm font-bold text-blue-600">
-                      {formatPrice(p.price)}
+                      {getPriceRange(p).min !== getPriceRange(p).max && (
+                        <span className="me-1 text-xs font-semibold text-gray-500">
+                          ابتداءً من
+                        </span>
+                      )}
+                      {formatPrice(getPriceRange(p).min)}
                     </span>
+                    {(p.variants?.length ?? 0) > 0 && (
+                      <span className="rounded-full bg-indigo-50 px-2 py-0.5 text-xs font-semibold text-indigo-700">
+                        {p.variants!.length.toLocaleString("ar-EG")} تركيبة
+                      </span>
+                    )}
                     <StockBadge stock={p.stock} />
                   </div>
                 </div>

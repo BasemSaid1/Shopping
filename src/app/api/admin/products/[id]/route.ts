@@ -20,7 +20,16 @@ export async function PATCH(
   return proxyMultipart(request, {
     method: "PATCH",
     url: `/product/${id}`,
-    fields: ["title", "description", "price", "stock", "brand", "category"],
+    fields: [
+      "title",
+      "description",
+      "price",
+      "stock",
+      "brand",
+      "category",
+      "options",
+      "variants",
+    ],
     files: ["file", "files"],
   });
 }

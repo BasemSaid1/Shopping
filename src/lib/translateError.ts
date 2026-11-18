@@ -111,6 +111,21 @@ const exact: Record<string, string> = {
   "some items in your cart are no longer available in the requested quantity":
     "بعض المنتجات في سلتك لم تعد متوفرة بالكمية المطلوبة، راجع السلة",
 
+  "price is required": "السعر مطلوب",
+  "stock is required": "المخزون مطلوب",
+  "options and variants must be provided together":
+    "لازم تحدد الخيارات والتركيبات مع بعض",
+  "variant attributes must match product options":
+    "تركيبات المنتج لا تطابق الخيارات المعرّفة",
+  "duplicate variant combination": "في تركيبة مكررة",
+  "price and stock are required when removing variants":
+    "عند تحويل المنتج لمنتج عادي لازم تحدد السعر والمخزون",
+  "a product can have at most 3 options": "الحد الأقصى 3 خيارات للمنتج",
+  "a product can have at most 100 variants": "الحد الأقصى 100 تركيبة للمنتج",
+  "option name is required": "اسم الخيار مطلوب",
+  "each option needs at least one value":
+    "كل خيار لازم له قيمة واحدة على الأقل",
+
   "invalid order status": "حالة الطلب غير صالحة",
   "invalid status transition": "لا يمكن نقل الطلب لهذه الحالة",
   "card order must be paid first": "طلب البطاقة لازم يتدفع الأول",
@@ -119,6 +134,11 @@ const exact: Record<string, string> = {
 };
 
 const patterns: Array<[RegExp, (m: RegExpMatchArray) => string]> = [
+  [/^duplicate option name .+$/, () => "أسماء الخيارات لازم تكون مختلفة"],
+  [
+    /^duplicate values in option (.+)$/,
+    (m) => `الخيار "${m[1]}" فيه قيمة مكررة`,
+  ],
   [
     /^insuffecent stock\. only (\d+) units available$/,
     (m) => `المتاح من هذا المنتج ${m[1]} قطعة فقط`,

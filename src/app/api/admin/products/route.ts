@@ -21,7 +21,16 @@ export async function POST(request: Request) {
   return proxyMultipart(request, {
     method: "POST",
     url: "/product",
-    fields: ["title", "description", "price", "stock", "brand", "category"],
+    fields: [
+      "title",
+      "description",
+      "price",
+      "stock",
+      "brand",
+      "category",
+      "options",
+      "variants",
+    ],
     files: ["file", "files"],
     requiredFiles: ["file"],
   });
