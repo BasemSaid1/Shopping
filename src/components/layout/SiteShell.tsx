@@ -1,12 +1,12 @@
 import { Suspense } from "react";
 import Footer from "./Footer";
 import AuthNavbar from "./AuthNavbar";
-import NavbarSkeleton from "./NavbarSkeleton";
+import NavbarShell from "./NavbarShell";
 
 export default function SiteShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
-      <Suspense fallback={<NavbarSkeleton />}>
+      <Suspense fallback={<NavbarShell />}>
         <AuthNavbar />
       </Suspense>
 
