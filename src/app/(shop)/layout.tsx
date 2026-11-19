@@ -1,21 +1,9 @@
-import { Suspense } from "react";
-import Footer from "@/components/layout/Footer";
-import AuthNavbar from "@/components/layout/AuthNavbar";
+import SiteShell from "@/components/layout/SiteShell";
 
 export default function ShopLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="flex min-h-screen flex-col">
-      <Suspense fallback={<div data-skeleton className="h-16" />}>
-        <AuthNavbar />
-      </Suspense>
-
-      <main className="flex-1">{children}</main>
-
-      <Footer />
-    </div>
-  );
+  return <SiteShell>{children}</SiteShell>;
 }

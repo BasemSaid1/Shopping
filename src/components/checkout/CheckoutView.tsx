@@ -30,6 +30,7 @@ import {
 import FormInput from "@/components/FormInput";
 import type { ApiResponse, CartItem, Product } from "@/types";
 import { cartItemKey } from "@/lib/variants";
+import CheckoutSkeleton from "./CheckoutSkeleton";
 
 type AvailableItem = CartItem & { product: Product };
 type AppliedCoupon = { code: string; discountPercentage: number };
@@ -147,9 +148,7 @@ export default function CheckoutView() {
     }
   }
 
-  if (loading) {
-    return <div className="h-96 animate-pulse rounded-2xl bg-gray-100" />;
-  }
+  if (loading) return <CheckoutSkeleton />;
 
   if (loadError || !cart) {
     return (

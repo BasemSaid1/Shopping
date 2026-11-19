@@ -120,9 +120,9 @@ export default function ForgotPasswordPage() {
   });
 
   return (
-    <main className="min-h-screen bg-[#f8f8fa] lg:grid lg:grid-cols-2">
+    <div className="min-h-[calc(100vh-4rem)] bg-[#f8f8fa] lg:grid lg:grid-cols-2">
       {/* Left Side - Form */}
-      <section className="flex min-h-screen items-center justify-center px-6 py-12 sm:px-10 lg:px-16">
+      <section className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-6 py-12 sm:px-10 lg:px-16">
         <div className="w-full max-w-md space-y-10">
           {/* Heading */}
           <div className="space-y-3">
@@ -182,7 +182,7 @@ export default function ForgotPasswordPage() {
       </section>
 
       {/* Right Side - Image */}
-      <section className="relative hidden min-h-screen overflow-hidden lg:block">
+      <section className="relative hidden min-h-[calc(100vh-4rem)] overflow-hidden lg:block">
         <img
           src="./images/auth.jfif"
           alt="Shopping store"
@@ -191,6 +191,6 @@ export default function ForgotPasswordPage() {
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/10" />
       </section>
-    </main>
+    </div>
   );
 }

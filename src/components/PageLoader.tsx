@@ -1,14 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { FaShoppingBag } from "react-icons/fa";
 
 const MIN_VISIBLE_MS = 500;
 const MAX_WAIT_MS = 10000;
 const SETTLE_MS = 150;
 const FADE_MS = 300;
-// أي عنصر تحميل لسه موجود في الصفحة
 const PENDING = "[data-skeleton], .animate-pulse";
+const NO_LOADER = [
+  "/login",
+  "/register",
+  "/forgot-password",
+  "/reset-password",
+  "/verify-email",
+];
 
 export default function PageLoader() {
   const [phase, setPhase] = useState<"show" | "hide" | "gone">("show");
@@ -64,6 +71,7 @@ export default function PageLoader() {
       clearTimeout(maxTimer);
       window.removeEventListener("load", check);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

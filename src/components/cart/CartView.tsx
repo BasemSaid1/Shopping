@@ -20,6 +20,7 @@ import { getImageUrl } from "@/lib/image";
 import { formatPrice } from "@/lib/format";
 import type { ApiResponse, Cart, CartItem, Product } from "@/types";
 import { cartItemKey, getItemStock } from "@/lib/variants";
+import CartSkeleton from "./CartSkeleton";
 
 type AvailableItem = CartItem & { product: Product };
 
@@ -90,16 +91,6 @@ export default function CartView() {
     }
   }
 
-  // const updateQuantity = (productId: string, action: "increase" | "decrease") =>
-  //   mutate(productId, () =>
-  //     api.patch<ApiResponse<Cart>>(`/cart/item/${productId}`, { action }),
-  //   );
-
-  // const removeItem = (productId: string) =>
-  //   mutate(productId, () =>
-  //     api.delete<ApiResponse<Cart>>(`/cart/item/${productId}`),
-  //   );
-
   const updateQuantity = (
     item: AvailableItem,
     action: "increase" | "decrease",
@@ -120,13 +111,7 @@ export default function CartView() {
     );
 
   if (loading) {
-    return (
-      <div className="space-y-4">
-        {[0, 1, 2].map((i) => (
-          <div key={i} className="h-32 animate-pulse rounded-2xl bg-gray-100" />
-        ))}
-      </div>
-    );
+    return <CartSkeleton />;
   }
 
   if (loadError || !cart) {

@@ -199,8 +199,8 @@ export default function RegisterPage() {
     formik.touched[name] && formik.errors[name];
 
   return (
-    <main className="min-h-screen bg-[#f8f8fa] lg:grid lg:grid-cols-2">
-      <section className="flex min-h-screen items-center justify-center px-5 py-10 sm:px-10 lg:px-14 xl:px-20">
+    <div className="min-h-[calc(100vh-4rem)] bg-[#f8f8fa] lg:grid lg:grid-cols-2">
+      <section className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-5 py-10 sm:px-10 lg:px-14 xl:px-20">
         <div className="w-full max-w-md">
           <div className="mb-7">
             <h1 className="mb-3 text-3xl font-extrabold text-gray-900 sm:text-4xl">
@@ -334,7 +334,7 @@ export default function RegisterPage() {
         </div>
       </section>
 
-      <section className="relative hidden min-h-screen overflow-hidden lg:block">
+      <section className="relative hidden min-h-[calc(100vh-4rem)] overflow-hidden lg:block">
         <img
           src="./images/auth.jfif"
           alt="Shopping store"
@@ -343,6 +343,6 @@ export default function RegisterPage() {
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/10" />
       </section>
-    </main>
+    </div>
   );
 }

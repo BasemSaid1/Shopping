@@ -22,6 +22,7 @@ import { getErrorMessage } from "@/lib/getErrorMessage";
 import { getImageUrl } from "@/lib/image";
 import { formatDate } from "@/lib/format";
 import type { ApiResponse, Profile } from "@/types";
+import ProfileSkeleton from "./ProfileSkeleton";
 
 const MAX_SIZE = 5 * 1024 * 1024;
 const ALLOWED = ["image/jpeg", "image/png"];
@@ -124,13 +125,7 @@ export default function ProfileView() {
     }
   }
 
-  if (loading) {
-    return (
-      <div className="flex justify-center py-24 text-3xl text-blue-600">
-        <FaSpinner className="animate-spin" />
-      </div>
-    );
-  }
+  if (loading) return <ProfileSkeleton />;
 
   if (error || !profile) {
     return (

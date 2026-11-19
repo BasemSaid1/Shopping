@@ -78,8 +78,8 @@ export default function VerifyEmailPage({
   searchParams: SearchParams;
 }) {
   return (
-    <main className="min-h-screen bg-[#f8f8fa] lg:grid lg:grid-cols-2">
-      <section className="flex min-h-screen items-center justify-center px-5 py-10 sm:px-10 lg:px-14 xl:px-20">
+    <div className="min-h-[calc(100vh-4rem)] bg-[#f8f8fa] lg:grid lg:grid-cols-2">
+      <section className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-5 py-10 sm:px-10 lg:px-14 xl:px-20">
         <div className="w-full max-w-md">
           <Suspense
             fallback={
@@ -97,7 +97,7 @@ export default function VerifyEmailPage({
       </section>
 
       {/* Right Image */}
-      <section className="relative hidden min-h-screen overflow-hidden lg:block">
+      <section className="relative hidden min-h-[calc(100vh-4rem)] overflow-hidden lg:block">
         <img
           src="./images/auth.jfif"
           alt="Shopping store"
@@ -106,6 +106,6 @@ export default function VerifyEmailPage({
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/10" />
       </section>
-    </main>
+    </div>
   );
 }
