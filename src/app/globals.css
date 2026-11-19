@@ -60,3 +60,88 @@ body {
     background-color: #ffffff;
   }
 }
+
+/* ---------- الصفحة الرئيسية: الـ hero ---------- */
+@keyframes word-reel {
+  0%,
+  16% {
+    transform: translateY(0);
+  }
+  20%,
+  36% {
+    transform: translateY(calc(-1.2em * 1));
+  }
+  40%,
+  56% {
+    transform: translateY(calc(-1.2em * 2));
+  }
+  60%,
+  76% {
+    transform: translateY(calc(-1.2em * 3));
+  }
+  80%,
+  96% {
+    transform: translateY(calc(-1.2em * 4));
+  }
+  100% {
+    transform: translateY(calc(-1.2em * 5));
+  }
+}
+
+.word-reel {
+  animation: word-reel 10s cubic-bezier(0.7, 0, 0.2, 1) infinite;
+}
+
+@keyframes tag-swing {
+  0% {
+    transform: rotate(calc(var(--r) + 22deg));
+  }
+  45% {
+    transform: rotate(calc(var(--r) - 7deg));
+  }
+  70% {
+    transform: rotate(calc(var(--r) + 3deg));
+  }
+  100% {
+    transform: rotate(var(--r));
+  }
+}
+
+.tag-swing {
+  transform: rotate(var(--r));
+  transform-origin: top center;
+  animation: tag-swing 1.4s cubic-bezier(0.25, 0.8, 0.3, 1) both;
+  animation-delay: var(--d, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word-reel,
+  .tag-swing {
+    animation: none;
+  }
+}
+
+/* ---------- شريط الماركات المتحرك ---------- */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee var(--dur, 40s) linear infinite;
+}
+
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
