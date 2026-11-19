@@ -89,13 +89,13 @@ function BrandCard({ brand }: { brand: Brand }) {
   return (
     <Link
       href={`/products?brand=${brand._id}`}
-      className="group flex h-32 w-52 shrink-0 flex-col items-center justify-center gap-3 rounded-2xl border border-gray-100 bg-white p-5 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#6366f1]/30 hover:shadow-lg hover:shadow-[#6366f1]/10"
+      className="group flex h-32 w-52 shrink-0 flex-col items-center justify-center gap-3 rounded-2xl border border-gray-100 bg-[#f5f5f7ea] p-5 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#6366f1]/30 hover:shadow-lg hover:shadow-[#6366f1]/10"
     >
       <span className="line-clamp-1 text-2xl font-black tracking-wide text-gray-900 transition-colors group-hover:text-[#6366f1]">
         {brand.name}
       </span>
 
-      <span className="text-xs font-medium text-gray-400 transition-colors group-hover:text-[#6366f1]">
+      <span className="text-xs font-medium text-gray-600 transition-colors group-hover:text-[#6366f1]">
         اكتشف المنتجات
       </span>
     </Link>
@@ -113,14 +113,12 @@ export default async function BrandsTicker() {
 
   if (!brands?.length) return null;
 
-  const repeat = Math.max(2, Math.ceil(10 / brands.length));
-
-  const set = Array.from({ length: repeat }, () => brands).flat();
+  const set = [...brands];
 
   return (
     <section
       aria-label="الماركات"
-      className="overflow-hidden bg-[#f5f5f7] py-10 sm:py-14"
+      className="overflow-hidden bg-white py-10 sm:py-14"
     >
       <div className="mx-auto mb-7 flex max-w-7xl items-end justify-between gap-4 px-4 sm:mb-9 sm:px-6 lg:px-8">
         <div>
@@ -160,30 +158,31 @@ export default async function BrandsTicker() {
       </div>
 
       <style>{`
-        .brands-track {
-          animation: brands-scroll 35s linear infinite;
-          direction: ltr;
-        }
+  .brands-track {
+    animation: brands-scroll 18s linear infinite;
+    direction: ltr;
+    width: max-content;
+  }
 
-        .brands-slider:hover .brands-track {
-          animation-play-state: paused;
-        }
+  .brands-slider:hover .brands-track {
+    animation-play-state: paused;
+  }
 
-        @keyframes brands-scroll {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-50%);
-          }
-        }
+  @keyframes brands-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
 
-        @media (prefers-reduced-motion: reduce) {
-          .brands-track {
-            animation: none;
-          }
-        }
-      `}</style>
+  @media (prefers-reduced-motion: reduce) {
+    .brands-track {
+      animation: none;
+    }
+  }
+`}</style>
     </section>
   );
 }
