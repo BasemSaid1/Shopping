@@ -18,7 +18,7 @@ function Item({ brand, hidden }: { brand: Brand; hidden?: boolean }) {
       >
         {brand.name}
       </Link>
-      <span aria-hidden="true" className="h-2.5 w-2.5 rotate-45 bg-[#FF5C47]" />
+      {/* <span aria-hidden="true" className="h-2.5 w-2.5 rotate-45 bg-[#FF5C47]" /> */}
     </li>
   );
 }

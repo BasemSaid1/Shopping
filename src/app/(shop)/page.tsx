@@ -7,6 +7,9 @@ import Explore from "@/components/home/Explore";
 import BrandsTicker, {
   BrandsTickerFallback,
 } from "@/components/home/BrandsTicker";
+import CategoriesGrid, {
+  CategoriesGridFallback,
+} from "@/components/home/CategoriesGrid";
 
 export default function Home() {
   return (
@@ -14,6 +17,9 @@ export default function Home() {
       <Hero />
       <Suspense fallback={<BrandsTickerFallback />}>
         <BrandsTicker />
+      </Suspense>
+      <Suspense fallback={<CategoriesGridFallback />}>
+        <CategoriesGrid />
       </Suspense>
       <Features />
       <Suspense fallback={<LatestProductsSkeleton />}>
