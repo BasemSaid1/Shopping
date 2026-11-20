@@ -5,6 +5,7 @@ import {
   FaCopyright,
   FaThLarge,
   FaTicketAlt,
+  FaUsers,
 } from "react-icons/fa";
 import type { IconType } from "react-icons";
 import AdminStats from "@/components/admin/AdminStats";
@@ -50,6 +51,13 @@ const sections: {
     text: "متابعة الطلبات وحالاتها",
     icon: FaClipboardList,
     color: "bg-rose-600",
+  },
+  {
+    href: "/admin/users",
+    title: "المستخدمين",
+    text: "الحسابات المسجّلة في المتجر",
+    icon: FaUsers,
+    color: "bg-sky-600",
   },
 ];
 

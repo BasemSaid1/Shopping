@@ -80,6 +80,10 @@ const exact: Record<string, string> = {
   "coupon not found": "كود الخصم غير موجود",
   "coupon code already exists": "كود الخصم موجود بالفعل",
 
+  "this user has orders and cannot be deleted": "لا يمكن حذف مستخدم لديه طلبات",
+  "admin accounts cannot be deleted": "لا يمكن حذف حساب أدمن",
+  "invalid user id": "معرّف المستخدم غير صالح",
+
   // التقييمات
   "you have already reviewed this product": "لقد قمت بتقييم هذا المنتج من قبل",
   "the product you want to review does not exist":

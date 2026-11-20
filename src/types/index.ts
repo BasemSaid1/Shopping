@@ -172,3 +172,29 @@ export interface ProductVariant {
   price: number;
   stock: number;
 }
+
+export interface AdminUser {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: "USER" | "ADMIN";
+  provider: "SYSTEM" | "GOOGLE";
+  gender?: string;
+  confirmEmail?: string;
+  profilePic?: string;
+  createdAt: string;
+}
+
+export interface AdminUsersSummary {
+  total: number;
+  verified: number;
+  unverified: number;
+  admins: number;
+}
+
+export interface AdminUsersResult {
+  users: AdminUser[];
+  summary: AdminUsersSummary;
+  pagination: Pagination;
+}

@@ -15,6 +15,7 @@ import {
   FaThLarge,
   FaTicketAlt,
   FaTimes,
+  FaUsers,
 } from "react-icons/fa";
 import type { IconType } from "react-icons";
 import { api } from "@/lib/api";
@@ -31,6 +32,7 @@ const items: {
   { href: "/admin/brands", label: "الماركات", icon: FaCopyright },
   { href: "/admin/coupons", label: "الكوبونات", icon: FaTicketAlt },
   { href: "/admin/orders", label: "الطلبات", icon: FaClipboardList },
+  { href: "/admin/users", label: "المستخدمين", icon: FaUsers },
 ];
 
 export default function AdminSidebar() {
